@@ -8,16 +8,24 @@
 #include <metal_stdlib>
 using namespace metal;
 
-constant float4 position[3] = {
-    float4(-0.5, -0.2, 0, 1),
-    float4(0.2, -0.2, 0, 1),
-    float4(0, 0.5, 0, 1),
+constant float4 position[6] = {
+    float4(-0.5, 0.0, 0, 1),
+    float4(0.0, 0.0, 0, 1),
+    float4(-0.5, 0.5, 0, 1),
+    
+    float4(0.0, 0.0, 0, 1),
+    float4(-0.5, 0.5, 0, 1),
+    float4(0.0, 0.5, 0, 1),
 };
 
-constant float3 color[3] = {
+constant float3 color[6] = {
     float3(1, 0, 0),
     float3(0, 1, 0),
     float3(0, 0, 1),
+    
+    float3(0, 1, 0),
+    float3(0, 0, 1),
+    float3(1, 0, 0),
 };
 
 struct VertexOut {
