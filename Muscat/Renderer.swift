@@ -48,6 +48,7 @@ extension Renderer: MTKViewDelegate {
     }
     
     // gpu interaction
+    // draw call
     func draw(in view: MTKView) {
         guard let commandBuffer = commandQueue.makeCommandBuffer(),
               let drawable = view.currentDrawable,
@@ -57,7 +58,7 @@ extension Renderer: MTKViewDelegate {
         }
         
         commandEncoder.setRenderPipelineState(pipelineState)
-        commandEncoder.drawPrimitives(type: .point, vertexStart: 0, vertexCount: 1)
+        commandEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: 3)
         commandEncoder.endEncoding()
         
         commandBuffer.present(drawable)
