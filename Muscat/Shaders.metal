@@ -8,16 +8,7 @@
 #include <metal_stdlib>
 using namespace metal;
 
-constant float4 position[6] = {
-    float4(-0.5, 0.0, 0, 1),
-    float4(0.0, 0.0, 0, 1),
-    float4(-0.5, 0.5, 0, 1),
-    
-    float4(0.0, 0.0, 0, 1),
-    float4(-0.5, 0.5, 0, 1),
-    float4(0.0, 0.5, 0, 1),
-};
-
+/*
 constant float3 color[6] = {
     float3(1, 0, 0),
     float3(0, 1, 0),
@@ -27,6 +18,7 @@ constant float3 color[6] = {
     float3(0, 0, 1),
     float3(1, 0, 0),
 };
+*/
 
 struct VertexOut {
     float4 position [[position]];
@@ -34,12 +26,15 @@ struct VertexOut {
     float3 color;
 };
 
-vertex VertexOut vertex_main(uint vertexId [[vertex_id]]) {
+vertex VertexOut vertex_main(device const float4 *positionBuffer [[buffer(0)]],
+                             device const float3 *colorBuffer [[buffer(1)]],
+                             constant float &timer [[buffer(2)]],
+                             uint vertexId [[vertex_id]]) {
     VertexOut out {
-        .position = position[vertexId],  // center (0, 0, 0)
-        .color = color[vertexId],
-        .point_size = 60
+        .position = positionBuffer[vertexId],  // center (0, 0, 0)
+        .color = colorBuffer[vertexId],
     };
+    out.position.x += timer;
     return out;
 }
 
