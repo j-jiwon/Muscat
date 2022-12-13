@@ -28,13 +28,11 @@ struct VertexOut {
 
 vertex VertexOut vertex_main(device const float4 *positionBuffer [[buffer(0)]],
                              device const float3 *colorBuffer [[buffer(1)]],
-                             constant float &timer [[buffer(2)]],
                              uint vertexId [[vertex_id]]) {
     VertexOut out {
         .position = positionBuffer[vertexId],  // center (0, 0, 0)
         .color = colorBuffer[vertexId],
     };
-    out.position.x += timer;
     return out;
 }
 
