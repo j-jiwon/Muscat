@@ -21,6 +21,7 @@ class Renderer: NSObject {
     let pipelineState: MTLRenderPipelineState
     
     let train: Model
+    let tree: Model
     
     var timer: Float = 0
     
@@ -35,7 +36,12 @@ class Renderer: NSObject {
         pipelineState = Renderer.createPipelineState()
         
         train = Model(name: "train")
+        train.transform.position = [0.4, 0, 0]
+        train.transform.scale = 0.5
         
+        tree = Model(name:"treefir")
+        tree.transform.position = [-0.5, 0.0, 0.0]
+        tree.transform.scale = 0.5
         super.init()
     }
     
@@ -64,33 +70,40 @@ extension Renderer: MTKViewDelegate {
     func draw(in view: MTKView) {
         guard let commandBuffer = commandQueue.makeCommandBuffer(),
               let drawable = view.currentDrawable,
-              let descriptor = view.currentRenderPassDescriptor,
-              let commandEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: descriptor) else {
+              let descriptor = view.currentRenderPassDescriptor else {
             return
         }
-        
+        let commandEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: descriptor)!
         commandEncoder.setRenderPipelineState(pipelineState)
         
-        for mtkMesh in train.mtkMeshes {
-            for vertexBuffer in mtkMesh.vertexBuffers {
-                commandEncoder.setVertexBuffer(vertexBuffer.buffer, offset: 0, index: 0)
-                
-                var color = 0
-                
-                for submesh in mtkMesh.submeshes {
+        let models = [train, tree]
+        for model in models {
+            
+            var modelMatrix = model.transform.matrix
+            commandEncoder.setVertexBytes(&modelMatrix, length: MemoryLayout<float4x4>.stride, index: 21)
+            
+            for mtkMesh in model.mtkMeshes {
+                for vertexBuffer in mtkMesh.vertexBuffers {
+                    commandEncoder.setVertexBuffer(vertexBuffer.buffer, offset: 0, index: 0)
                     
-                    commandEncoder.setVertexBytes(&color, length: MemoryLayout<Int>.stride, index: 11)
+                    var color = 0
                     
-                    commandEncoder.drawIndexedPrimitives(type: .triangle,
-                                                         indexCount: submesh.indexCount,
-                                                         indexType: submesh.indexType,
-                                                         indexBuffer: submesh.indexBuffer.buffer,
-                                                         indexBufferOffset: submesh.indexBuffer.offset)
-                    
-                    color += 1
+                    for submesh in mtkMesh.submeshes {
+                        
+                        commandEncoder.setVertexBytes(&color, length: MemoryLayout<Int>.stride, index: 11)
+                        
+                        commandEncoder.drawIndexedPrimitives(type: .triangle,
+                                                             indexCount: submesh.indexCount,
+                                                             indexType: submesh.indexType,
+                                                             indexBuffer: submesh.indexBuffer.buffer,
+                                                             indexBufferOffset: submesh.indexBuffer.offset)
+                        
+                        color += 1
+                    }
                 }
             }
         }
+
         commandEncoder.endEncoding()
         
         commandBuffer.present(drawable)

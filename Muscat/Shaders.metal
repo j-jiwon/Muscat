@@ -28,12 +28,13 @@ struct VertexOut {
 };
  
 vertex VertexOut vertex_main(VertexIn vertexBuffer [[stage_in]],
-                             constant uint &colorIndex [[buffer(11)]]) {
+                             constant uint &colorIndex [[buffer(11)]],
+                             constant float4x4 &modelMatrix [[buffer(21)]]) {
     VertexOut out {
-        .position = vertexBuffer.position,  // center (0, 0, 0)
+        .position = modelMatrix * vertexBuffer.position,  // center (0, 0, 0)
         .color = color[colorIndex],
     };
-    out.position.y -= 0.5;
+
     return out;
 }
 

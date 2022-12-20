@@ -17,6 +17,10 @@
 		552E97EB294A2000003C7055 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552E97EA294A2000003C7055 /* Model.swift */; };
 		552E97EE294A2298003C7055 /* train.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 552E97EC294A2298003C7055 /* train.mtl */; };
 		552E97EF294A2298003C7055 /* train.obj in Resources */ = {isa = PBXBuildFile; fileRef = 552E97ED294A2298003C7055 /* train.obj */; };
+		55886BC32951FDF500E6D549 /* MathLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55886BC22951FDF500E6D549 /* MathLibrary.swift */; };
+		55886BC52951FEC500E6D549 /* treefir.mtl in Sources */ = {isa = PBXBuildFile; fileRef = 55886BC42951FEC500E6D549 /* treefir.mtl */; };
+		55886BC72951FF2B00E6D549 /* treefir.obj in Resources */ = {isa = PBXBuildFile; fileRef = 55886BC62951FF2B00E6D549 /* treefir.obj */; };
+		55886BC92951FFA400E6D549 /* Transform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55886BC82951FFA400E6D549 /* Transform.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +36,10 @@
 		552E97EA294A2000003C7055 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		552E97EC294A2298003C7055 /* train.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = train.mtl; sourceTree = "<group>"; };
 		552E97ED294A2298003C7055 /* train.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = train.obj; sourceTree = "<group>"; };
+		55886BC22951FDF500E6D549 /* MathLibrary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MathLibrary.swift; sourceTree = "<group>"; };
+		55886BC42951FEC500E6D549 /* treefir.mtl */ = {isa = PBXFileReference; lastKnownFileType = text; path = treefir.mtl; sourceTree = "<group>"; };
+		55886BC62951FF2B00E6D549 /* treefir.obj */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = treefir.obj; sourceTree = "<group>"; };
+		55886BC82951FFA400E6D549 /* Transform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transform.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,6 +82,8 @@
 				552E97DB293D56F4003C7055 /* Main.storyboard */,
 				552E97DE293D56F4003C7055 /* Muscat.entitlements */,
 				552E97EA294A2000003C7055 /* Model.swift */,
+				55886BC22951FDF500E6D549 /* MathLibrary.swift */,
+				55886BC82951FFA400E6D549 /* Transform.swift */,
 			);
 			path = Muscat;
 			sourceTree = "<group>";
@@ -83,6 +93,8 @@
 			children = (
 				552E97EC294A2298003C7055 /* train.mtl */,
 				552E97ED294A2298003C7055 /* train.obj */,
+				55886BC42951FEC500E6D549 /* treefir.mtl */,
+				55886BC62951FF2B00E6D549 /* treefir.obj */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -145,6 +157,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				55886BC72951FF2B00E6D549 /* treefir.obj in Resources */,
 				552E97EF294A2298003C7055 /* train.obj in Resources */,
 				552E97DA293D56F4003C7055 /* Assets.xcassets in Resources */,
 				552E97DD293D56F4003C7055 /* Main.storyboard in Resources */,
@@ -160,10 +173,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				552E97E92948D613003C7055 /* Extensions.swift in Sources */,
+				55886BC32951FDF500E6D549 /* MathLibrary.swift in Sources */,
 				552E97E7293EB020003C7055 /* Shaders.metal in Sources */,
 				552E97D8293D56F3003C7055 /* ViewController.swift in Sources */,
 				552E97EB294A2000003C7055 /* Model.swift in Sources */,
 				552E97E5293D5969003C7055 /* Renderer.swift in Sources */,
+				55886BC52951FEC500E6D549 /* treefir.mtl in Sources */,
+				55886BC92951FFA400E6D549 /* Transform.swift in Sources */,
 				552E97D6293D56F3003C7055 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
