@@ -40,7 +40,7 @@ class Renderer: NSObject {
         train.transform.scale = 0.5
         
         tree = Model(name:"treefir")
-        tree.transform.position = [-0.5, 0.0, 0.0]
+        tree.transform.position = [-1.0, 0, 0.3]
         tree.transform.scale = 0.5
         super.init()
     }
@@ -76,6 +76,16 @@ extension Renderer: MTKViewDelegate {
         let commandEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: descriptor)!
         commandEncoder.setRenderPipelineState(pipelineState)
         
+        let projectionMatrix = float4x4(projectionFov: radians(fromDegrees: 65), near: 0.1, far: 100, aspect: Float(view.bounds.width / view.bounds.height))
+        
+        var viewTransform = Transform()
+        viewTransform.position.y = 1.0
+        viewTransform.position.z = -2.0
+        
+        
+        var viewMatrix = projectionMatrix * viewTransform.matrix.inverse
+        commandEncoder.setVertexBytes(&viewMatrix, length: MemoryLayout<float4x4>.stride, index: 22)
+        
         let models = [train, tree]
         for model in models {
             
@@ -103,6 +113,7 @@ extension Renderer: MTKViewDelegate {
                 }
             }
         }
+
 
         commandEncoder.endEncoding()
         

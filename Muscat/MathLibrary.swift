@@ -51,6 +51,14 @@ typealias float4 = SIMD4<Float>
 
 let π = Float.pi
 
+func radians (fromDegrees degrees: Float)->Float{
+    return (degrees / 180) * π
+}
+
+func degrees (fromRadians radians: Float)->Float{
+    return (radians / π) * 180
+}
+
 extension Float {
   var radiansToDegrees: Float {
     (self / π) * 180
