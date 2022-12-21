@@ -19,6 +19,7 @@ class Renderer: NSObject {
     let commandQueue: MTLCommandQueue
     static var library: MTLLibrary!
     let pipelineState: MTLRenderPipelineState
+    let depthStencilState: MTLDepthStencilState
     
     let train: Model
     let tree: Model
@@ -34,6 +35,9 @@ class Renderer: NSObject {
         self.commandQueue = commandQueue
         Renderer.library = device.makeDefaultLibrary()!
         pipelineState = Renderer.createPipelineState()
+        depthStencilState = Renderer.createDepthState()
+        
+        view.depthStencilPixelFormat = .depth32Float
         
         train = Model(name: "train")
         train.transform.position = [0.4, 0, 0]
@@ -43,6 +47,14 @@ class Renderer: NSObject {
         tree.transform.position = [-1.0, 0, 0.3]
         tree.transform.scale = 0.5
         super.init()
+    }
+    
+    static func createDepthState()->MTLDepthStencilState {
+        let depthDescriptor = MTLDepthStencilDescriptor()
+        depthDescriptor.depthCompareFunction = .less
+        depthDescriptor.isDepthWriteEnabled = true
+        
+        return Renderer.device.makeDepthStencilState(descriptor: depthDescriptor)!
     }
     
     static func createPipelineState() -> MTLRenderPipelineState {
@@ -55,6 +67,8 @@ class Renderer: NSObject {
         pipelineStateDescriptor.vertexFunction = vertexFunction
         pipelineStateDescriptor.fragmentFunction = fragmentFunction
         pipelineStateDescriptor.vertexDescriptor = MTLVertexDescriptor.defaultVertexDescriptor()
+        pipelineStateDescriptor.depthAttachmentPixelFormat = .depth32Float
+        
         
         return try! Renderer.device.makeRenderPipelineState(descriptor: pipelineStateDescriptor)
     }
@@ -75,6 +89,7 @@ extension Renderer: MTKViewDelegate {
         }
         let commandEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: descriptor)!
         commandEncoder.setRenderPipelineState(pipelineState)
+        commandEncoder.setDepthStencilState(depthStencilState)
         
         let projectionMatrix = float4x4(projectionFov: radians(fromDegrees: 65), near: 0.1, far: 100, aspect: Float(view.bounds.width / view.bounds.height))
         
