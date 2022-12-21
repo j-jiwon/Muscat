@@ -50,7 +50,7 @@ class Renderer: NSObject {
         tree.transform.position = [-1.0, 0, 0.3]
         tree.transform.scale = 0.5
         
-        camera.transform.position = [0, -0.5, -3]
+        camera.transform.position = [0, 0.5, -3]
         super.init()
     }
     
@@ -76,6 +76,12 @@ class Renderer: NSObject {
         
         
         return try! Renderer.device.makeRenderPipelineState(descriptor: pipelineStateDescriptor)
+    }
+    
+    func zoom(delta: Float) {
+        let sensitivity: Float = 0.05
+        let cameraVector = camera.transform.matrix.upperLeft.columns.2 // col[2] of 3x3 matrix
+        camera.transform.position += delta * sensitivity * cameraVector
     }
 }
 
