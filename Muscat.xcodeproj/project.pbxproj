@@ -21,6 +21,7 @@
 		55886BC52951FEC500E6D549 /* treefir.mtl in Sources */ = {isa = PBXBuildFile; fileRef = 55886BC42951FEC500E6D549 /* treefir.mtl */; };
 		55886BC72951FF2B00E6D549 /* treefir.obj in Resources */ = {isa = PBXBuildFile; fileRef = 55886BC62951FF2B00E6D549 /* treefir.obj */; };
 		55886BC92951FFA400E6D549 /* Transform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55886BC82951FFA400E6D549 /* Transform.swift */; };
+		55886BCB29535AF100E6D549 /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55886BCA29535AF100E6D549 /* Camera.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +41,8 @@
 		55886BC42951FEC500E6D549 /* treefir.mtl */ = {isa = PBXFileReference; lastKnownFileType = text; path = treefir.mtl; sourceTree = "<group>"; };
 		55886BC62951FF2B00E6D549 /* treefir.obj */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = treefir.obj; sourceTree = "<group>"; };
 		55886BC82951FFA400E6D549 /* Transform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transform.swift; sourceTree = "<group>"; };
+		55886BCA29535AF100E6D549 /* Camera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
+		55886BCC29535E3700E6D549 /* Common.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Common.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,6 +87,8 @@
 				552E97EA294A2000003C7055 /* Model.swift */,
 				55886BC22951FDF500E6D549 /* MathLibrary.swift */,
 				55886BC82951FFA400E6D549 /* Transform.swift */,
+				55886BCA29535AF100E6D549 /* Camera.swift */,
+				55886BCC29535E3700E6D549 /* Common.h */,
 			);
 			path = Muscat;
 			sourceTree = "<group>";
@@ -178,6 +183,7 @@
 				552E97D8293D56F3003C7055 /* ViewController.swift in Sources */,
 				552E97EB294A2000003C7055 /* Model.swift in Sources */,
 				552E97E5293D5969003C7055 /* Renderer.swift in Sources */,
+				55886BCB29535AF100E6D549 /* Camera.swift in Sources */,
 				55886BC52951FEC500E6D549 /* treefir.mtl in Sources */,
 				55886BC92951FFA400E6D549 /* Transform.swift in Sources */,
 				552E97D6293D56F3003C7055 /* AppDelegate.swift in Sources */,
@@ -254,6 +260,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OBJC_BRIDGING_HEADER = Muscat/Common.h;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -307,6 +314,7 @@
 				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;
 				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OBJC_BRIDGING_HEADER = Muscat/Common.h;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 			};
 			name = Release;
