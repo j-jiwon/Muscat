@@ -24,7 +24,7 @@ class Renderer: NSObject {
     let train: Model
     let tree: Model
     
-    let camera = Camera()
+    let camera = ArcballCamera()
     var uniforms = Uniforms()
     
     var timer: Float = 0
@@ -40,7 +40,8 @@ class Renderer: NSObject {
         pipelineState = Renderer.createPipelineState()
         depthStencilState = Renderer.createDepthState()
         
-        view.depthStencilPixelFormat = .depth32Float
+        camera.target = [0, 0.8, 0]
+        camera.distance = 3
         
         train = Model(name: "train")
         train.transform.position = [0.4, 0, 0]
@@ -50,8 +51,23 @@ class Renderer: NSObject {
         tree.transform.position = [-1.0, 0, 0.3]
         tree.transform.scale = 0.5
         
-        camera.transform.position = [0, 0.5, -3]
+        view.depthStencilPixelFormat = .depth32Float
+        
         super.init()
+    }
+    
+    static func createPipelineState() -> MTLRenderPipelineState {
+        let pipelineStateDescriptor = MTLRenderPipelineDescriptor()
+        pipelineStateDescriptor.colorAttachments[0].pixelFormat = .bgra8Unorm
+        
+        let vertexFunction = Renderer.library.makeFunction(name: "vertex_main")
+        let fragmentFunction = Renderer.library.makeFunction(name: "fragment_main")
+        pipelineStateDescriptor.vertexFunction = vertexFunction
+        pipelineStateDescriptor.fragmentFunction = fragmentFunction
+        pipelineStateDescriptor.vertexDescriptor = MTLVertexDescriptor.defaultVertexDescriptor()
+        pipelineStateDescriptor.depthAttachmentPixelFormat = .depth32Float
+        
+        return try! Renderer.device.makeRenderPipelineState(descriptor: pipelineStateDescriptor)
     }
     
     static func createDepthState()->MTLDepthStencilState {
@@ -60,28 +76,6 @@ class Renderer: NSObject {
         depthDescriptor.isDepthWriteEnabled = true
         
         return Renderer.device.makeDepthStencilState(descriptor: depthDescriptor)!
-    }
-    
-    static func createPipelineState() -> MTLRenderPipelineState {
-        let pipelineStateDescriptor = MTLRenderPipelineDescriptor()
-        
-        // pipeline state properties
-        pipelineStateDescriptor.colorAttachments[0].pixelFormat = .bgra8Unorm
-        let vertexFunction = Renderer.library.makeFunction(name: "vertex_main")
-        let fragmentFunction = Renderer.library.makeFunction(name: "fragment_main")
-        pipelineStateDescriptor.vertexFunction = vertexFunction
-        pipelineStateDescriptor.fragmentFunction = fragmentFunction
-        pipelineStateDescriptor.vertexDescriptor = MTLVertexDescriptor.defaultVertexDescriptor()
-        pipelineStateDescriptor.depthAttachmentPixelFormat = .depth32Float
-        
-        
-        return try! Renderer.device.makeRenderPipelineState(descriptor: pipelineStateDescriptor)
-    }
-    
-    func zoom(delta: Float) {
-        let sensitivity: Float = 0.05
-        let cameraVector = camera.transform.matrix.upperLeft.columns.2 // col[2] of 3x3 matrix
-        camera.transform.position += delta * sensitivity * cameraVector
     }
 }
 
@@ -98,6 +92,13 @@ extension Renderer: MTKViewDelegate {
               let descriptor = view.currentRenderPassDescriptor else {
             return
         }
+        
+        timer += 0.05
+        
+        var viewTransform = Transform()
+        viewTransform.position.y = 1.0
+        viewTransform.position.z = -2.0
+        
         let commandEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: descriptor)!
         commandEncoder.setRenderPipelineState(pipelineState)
         commandEncoder.setDepthStencilState(depthStencilState)
