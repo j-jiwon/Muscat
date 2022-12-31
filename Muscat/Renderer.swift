@@ -46,9 +46,10 @@ class Renderer: NSObject {
         train = Model(name: "train")
         train.transform.position = [0.4, 0, 0]
         train.transform.scale = 0.5
+        train.transform.rotation.y = radians(fromDegrees: 180)
         
         tree = Model(name:"treefir")
-        tree.transform.position = [-1.0, 0, 0.3]
+        tree.transform.position = [-1.0, 0, 1]
         tree.transform.scale = 0.5
         
         view.depthStencilPixelFormat = .depth32Float
@@ -106,7 +107,7 @@ extension Renderer: MTKViewDelegate {
         uniforms.viewMatrix = camera.viewMatrix
         uniforms.projectionMatrix = camera.projectionMatrix
         
-        let models = [train, tree]
+        let models = [tree, train]
         for model in models {
             
             uniforms.modelMatrix = model.transform.matrix

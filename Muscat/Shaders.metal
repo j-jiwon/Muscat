@@ -22,11 +22,14 @@ constant float3 color[6] = {
 
 struct VertexIn {
     float4 position [[attribute(0)]];
+    float3 normal [[attribute(1)]];
 };
 
 struct VertexOut {
     float4 position [[position]];
     float3 color;
+    float3 worldNormal;
+    float3 worldPosition;
 };
  
 vertex VertexOut vertex_main(VertexIn vertexBuffer [[stage_in]],
@@ -34,6 +37,8 @@ vertex VertexOut vertex_main(VertexIn vertexBuffer [[stage_in]],
                              constant Uniforms &uniforms [[buffer(21)]]) {
     VertexOut out {
         .position = uniforms.projectionMatrix * uniforms.viewMatrix * uniforms.modelMatrix * vertexBuffer.position,
+        .worldNormal = (uniforms.modelMatrix * float4(vertexBuffer.normal, 0)).xyz,
+        .worldPosition = (uniforms.modelMatrix * vertexBuffer.position).xyz,
         .color = color[colorIndex],
     };
 
@@ -41,6 +46,6 @@ vertex VertexOut vertex_main(VertexIn vertexBuffer [[stage_in]],
 }
 
 fragment float4 fragment_main(VertexOut in  [[stage_in]]) {
-    return float4(in.color, 1);  // color 전달 받아서 그려줌
+    return float4(normalize(in.worldNormal), 1);  // color 전달 받아서 그려줌
 }
 
