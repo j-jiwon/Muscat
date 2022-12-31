@@ -10,6 +10,10 @@ using namespace metal;
 
 #include "Common.h"
 
+constant float3 lightPosition = float3(2.0, 1.0, 0);
+constant float3 ambientLightColor = float3(1.0, 1.0, 1.0);
+constant float ambientIntensity = 0.4f;
+
 constant float3 color[6] = {
     float3(1, 0, 0),
     float3(0, 1, 0),
@@ -46,6 +50,14 @@ vertex VertexOut vertex_main(VertexIn vertexBuffer [[stage_in]],
 }
 
 fragment float4 fragment_main(VertexOut in  [[stage_in]]) {
-    return float4(normalize(in.worldNormal), 1);  // color 전달 받아서 그려줌
+    float3 lightVector = normalize(lightPosition);
+    float3 normalVector = normalize(in.worldNormal);
+    float3 diffuseIntensity = saturate(dot(lightVector, normalVector));
+    float3 baseColor = in.color;
+    
+    float3 diffuseColor = baseColor * diffuseIntensity;
+    float3 ambientColor = baseColor * ambientLightColor * ambientIntensity;
+    
+    float3 color = diffuseColor + ambientColor;
+    return float4(color, 1);
 }
-
