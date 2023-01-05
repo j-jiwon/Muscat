@@ -16,5 +16,8 @@ struct Uniforms {
     matrix_float4x4 projectionMatrix;
 };
 
+struct FragmentUniforms {
+    vector_float3 cameraPosition;
+};
 
 #endif /* Common_h */
