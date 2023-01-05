@@ -8,7 +8,7 @@
 import Foundation
 import MetalKit
 
-class Model {
+class Model: Node {
     
     var mdlMeshes: [MDLMesh]
     var mtkMeshes: [MTKMesh]
@@ -28,5 +28,8 @@ class Model {
         let (mdlMeshes, mtkMeshes) = try! MTKMesh.newMeshes(asset: asset, device: Renderer.device)
         self.mdlMeshes = mdlMeshes
         self.mtkMeshes = mtkMeshes
+        
+        super.init()
+        self.name = name
     }
 }

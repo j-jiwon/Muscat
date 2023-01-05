@@ -94,9 +94,7 @@ extension Renderer: MTKViewDelegate {
               let descriptor = view.currentRenderPassDescriptor else {
             return
         }
-        
-        timer += 0.05
-        
+                
         var viewTransform = Transform()
         viewTransform.position.y = 1.0
         viewTransform.position.z = -2.0
