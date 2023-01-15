@@ -10,8 +10,8 @@ import simd
 
 struct Transform
 {
-    var position = float3(0)
-    var rotation = float3(0)
+    var position = SIMD3<Float>(repeating: 0)
+    var rotation = SIMD3<Float>(repeating: 0)
     var scale: Float = 1
     
     var matrix : float4x4 {
@@ -19,6 +19,6 @@ struct Transform
         let rotationMatrix = float4x4(rotation: rotation)
         let scaleMatrix = float4x4(scaling: scale)
         
-        return translateMatrix * rotationMatrix * scaleMatrix 
+        return translateMatrix * rotationMatrix * scaleMatrix
     }
 }

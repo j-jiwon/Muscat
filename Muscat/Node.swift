@@ -10,15 +10,15 @@ import Foundation
 class Node {
     var name = "Untitled"
     
-    var position = float3(0)
-    var rotation = float3(0)
-    var scale: Float = 1
+    var position = SIMD3<Float>(repeating: 0)
+    var rotation = SIMD3<Float>(repeating: 0)
+    var scale: Float = 1.0
     
     var matrix: float4x4 {
         let translateMatrix = float4x4(translation: position)
         let rotationMatrix = float4x4(rotation: rotation)
         let scaleMatrix = float4x4(scaling: scale)
-        return translateMatrix * scaleMatrix * rotationMatrix
+        return scaleMatrix * rotationMatrix * translateMatrix
     }
     
     var parent: Node?
@@ -42,7 +42,7 @@ class Node {
             children.append(child)
         }
         childNode.children = []
-        guard let index = (children.index {
+        guard let index = (children.firstIndex {
             $0 === childNode
         }) else { return }
         children.remove(at: index)

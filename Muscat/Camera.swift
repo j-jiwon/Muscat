@@ -32,7 +32,7 @@ class Camera: Node{
   }
   
   func zoom(delta: Float) {}
-  func rotate(delta: float2) {}
+  func rotate(delta: SIMD2<Float>) {}
 }
 
 class ArcballCamera: Camera {
@@ -44,7 +44,7 @@ class ArcballCamera: Camera {
       _viewMatrix = updateViewMatrix()
     }
   }
-  var target = float3(0) {
+    var target = SIMD3<Float>(repeating: 0) {
     didSet {
       _viewMatrix = updateViewMatrix()
     }
@@ -77,7 +77,7 @@ class ArcballCamera: Camera {
     _viewMatrix = updateViewMatrix()
   }
   
-  override func rotate(delta: float2) {
+  override func rotate(delta: SIMD2<Float>) {
     let sensitivity: Float = 0.005
     transform.rotation.y += delta.x * sensitivity
     transform.rotation.x += delta.y * sensitivity

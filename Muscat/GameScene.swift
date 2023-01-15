@@ -8,13 +8,16 @@
 import Foundation
 
 class GameScene: Scene {
-    let train = Model(name: "train")
+  let train = Model(name: "train")
+  let tree = Model(name: "treefir")
+
+  override func setupScene() {
+    camera.target = [0, 0.8, 0]
+    camera.distance = 4
+    camera.rotation = [-0.4, -0.4, 0]
     
-    override func setupScene() {
-        add(node: train)
-        
-        let tree = Model(name: "treefir")
-        add(node: tree)
-        tree.position.x = -2.0
-    }
+    add(node: train)
+    add(node: tree)
+    tree.position.x = -2.0
+  }
 }
