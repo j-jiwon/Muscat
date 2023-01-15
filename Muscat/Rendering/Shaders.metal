@@ -42,15 +42,18 @@ vertex VertexOut vertex_main(VertexIn vertexBuffer [[stage_in]],
 
 fragment float4 fragment_main(VertexOut in  [[stage_in]],
                               constant Material &material [[buffer(11)]],
-                              constant FragmentUniforms &fragmentUniforms [[buffer(22)]]) {
-    return float4(in.uv, 0, 1);
+                              constant FragmentUniforms &fragmentUniforms [[buffer(22)]],
+                              texture2d<float>baseColorTexture [[texture(0)]]) {
+    
+    const sampler s(filter::linear);
+    
     float3 lightVector = normalize(lightPosition);
     float3 normalVector = normalize(in.worldNormal);
     float3 materialShininess = material.shininess;
     float3 materialSpecularColor = material.specularColor;
     
     float3 diffuseIntensity = saturate(dot(lightVector, normalVector));
-    float3 baseColor = material.baseColor;
+    float3 baseColor = baseColorTexture.sample(s, in.uv).rgb;
     
     float3 diffuseColor = baseColor * diffuseIntensity;
     float3 ambientColor = baseColor * ambientLightColor * ambientLightIntensity;
