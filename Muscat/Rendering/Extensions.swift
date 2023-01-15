@@ -20,7 +20,11 @@ extension MTLVertexDescriptor {
         vertexDescriptor.attributes[1].offset = MemoryLayout<SIMD3<Float>>.stride
         vertexDescriptor.attributes[1].bufferIndex = 0
         
-        let stride = MemoryLayout<SIMD3<Float>>.stride * 2
+        vertexDescriptor.attributes[2].format = .float2
+        vertexDescriptor.attributes[2].offset = MemoryLayout<SIMD3<Float>>.stride * 2
+        vertexDescriptor.attributes[2].bufferIndex = 0
+        
+        let stride = MemoryLayout<SIMD3<Float>>.stride * 2 + MemoryLayout<SIMD2<Float>>.stride
         vertexDescriptor.layouts[0].stride = stride
         return vertexDescriptor
     }
@@ -36,6 +40,9 @@ extension MDLVertexDescriptor {
         let attributeNormal = vertexDescriptor.attributes[1] as! MDLVertexAttribute
         attributeNormal.name = MDLVertexAttributeNormal
         
+        let attributeUV = vertexDescriptor.attributes[2] as! MDLVertexAttribute
+        attributeUV.name = MDLVertexAttributeTextureCoordinate
+         
         return vertexDescriptor
     }
 }

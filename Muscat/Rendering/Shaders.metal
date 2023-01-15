@@ -18,12 +18,14 @@ constant float3 lightSpecularColor = float3(1.0, 1.0, 1.0);
 struct VertexIn {
     float4 position [[attribute(0)]];
     float3 normal [[attribute(1)]];
+    float2 uv [[attribute(2)]];
 };
 
 struct VertexOut {
     float4 position [[position]];
     float3 worldNormal;
     float3 worldPosition;
+    float2 uv;
 };
  
 vertex VertexOut vertex_main(VertexIn vertexBuffer [[stage_in]],
@@ -32,6 +34,7 @@ vertex VertexOut vertex_main(VertexIn vertexBuffer [[stage_in]],
         .position = uniforms.projectionMatrix * uniforms.viewMatrix * uniforms.modelMatrix * vertexBuffer.position,
         .worldNormal = (uniforms.modelMatrix * float4(vertexBuffer.normal, 0)).xyz,
         .worldPosition = (uniforms.modelMatrix * vertexBuffer.position).xyz,
+        .uv = vertexBuffer.uv
     };
 
     return out;
@@ -40,6 +43,7 @@ vertex VertexOut vertex_main(VertexIn vertexBuffer [[stage_in]],
 fragment float4 fragment_main(VertexOut in  [[stage_in]],
                               constant Material &material [[buffer(11)]],
                               constant FragmentUniforms &fragmentUniforms [[buffer(22)]]) {
+    return float4(in.uv, 0, 1);
     float3 lightVector = normalize(lightPosition);
     float3 normalVector = normalize(in.worldNormal);
     float3 materialShininess = material.shininess;
