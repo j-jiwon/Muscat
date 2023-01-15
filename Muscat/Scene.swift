@@ -23,7 +23,7 @@ class Scene {
     }
     
     func updateScene(deltaTime: Float){
-        
+          
     }
     
     final func update(deltaTime: Float) {

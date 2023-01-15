@@ -40,4 +40,3 @@ class ViewController: NSViewController {
       gesture.setTranslation(.zero, in: gesture.view)
     }
 }
-

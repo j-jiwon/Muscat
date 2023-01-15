@@ -16,8 +16,8 @@ class GameScene: Scene {
     camera.distance = 4
     camera.rotation = [-0.4, -0.4, 0]
     
-    add(node: train)
     add(node: tree)
+    add(node: train)
     tree.position.x = -2.0
   }
 }

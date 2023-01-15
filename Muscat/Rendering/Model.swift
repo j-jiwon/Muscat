@@ -9,12 +9,7 @@ import Foundation
 import MetalKit
 
 class Model: Node {
-    
-    var mdlMeshes: [MDLMesh]
-    var mtkMeshes: [MTKMesh]
-    
-    var transform = Transform()
-    
+    let meshes: [Mesh]
     
     init(name: String) {
         let assetUrl = Bundle.main.url(forResource: name, withExtension: "obj")!
@@ -26,8 +21,10 @@ class Model: Node {
                              bufferAllocator: allocator)
         
         let (mdlMeshes, mtkMeshes) = try! MTKMesh.newMeshes(asset: asset, device: Renderer.device)
-        self.mdlMeshes = mdlMeshes
-        self.mtkMeshes = mtkMeshes
+        
+        meshes = zip(mdlMeshes, mtkMeshes).map {
+            Mesh(mdlMesh: $0.0, mtkMesh: $0.1)
+        }
         
         super.init()
         self.name = name
@@ -50,20 +47,23 @@ extension Model: Renderable {
                                        length: MemoryLayout<FragmentUniforms>.stride,
                                        index: 22)
         
-        for mtkMesh in mtkMeshes {
-            for vertexBuffer in mtkMesh.vertexBuffers {
+        for mesh in meshes {
+            for vertexBuffer in mesh.mtkMesh.vertexBuffers {
                 commandEncoder.setVertexBuffer(vertexBuffer.buffer, offset: 0, index: 0)
-                var colorIndex: Int = 0
                 
-                for submesh in mtkMesh.submeshes {
-                    commandEncoder.setVertexBytes(&colorIndex, length: MemoryLayout<Int>.stride, index: 11)
-                    commandEncoder.drawIndexedPrimitives(type: .triangle,
-                                                         indexCount: submesh.indexCount,
-                                                         indexType: submesh.indexType,
-                                                         indexBuffer: submesh.indexBuffer.buffer,
-                                                         indexBufferOffset: submesh.indexBuffer.offset)
+                for submesh in mesh.submeshes {
+                    var material = submesh.material
+                    commandEncoder.setFragmentBytes(&material,
+                                                    length: MemoryLayout<Material>.stride,
+                                                    index: 11)
+                    let mtkSubmesh = submesh.mtkSubmesh
                     
-                    colorIndex += 1
+                    commandEncoder.drawIndexedPrimitives(type: .triangle,
+                                                         indexCount: mtkSubmesh.indexCount,
+                                                         indexType: mtkSubmesh.indexType,
+                                                         indexBuffer: mtkSubmesh.indexBuffer.buffer,
+                                                         indexBufferOffset: mtkSubmesh.indexBuffer.offset)
+                    
                 }
             }
         }
