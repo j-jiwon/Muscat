@@ -20,10 +20,14 @@ struct FragmentUniforms {
     vector_float3 cameraPosition;
 };
 
-struct Material{
+struct Material {
     vector_float3 baseColor;
     vector_float3 specularColor;
     float shininess;
+};
+
+struct Instances {
+    matrix_float4x4 modelMatrix;
 };
 
 #endif /* Common_h */

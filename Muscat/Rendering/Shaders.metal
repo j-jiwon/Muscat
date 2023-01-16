@@ -42,6 +42,21 @@ vertex VertexOut vertex_main(VertexIn vertexBuffer [[stage_in]],
     return out;
 }
 
+vertex VertexOut vertex_instances(VertexIn vertexBuffer [[stage_in]],
+                                  constant Uniforms &uniforms [[buffer(21)]],
+                                  constant Instances *instances [[buffer(20)]],
+                                  uint instanceID [[instance_id]]) {
+    Instances instance = instances[instanceID];
+    VertexOut out {
+        .position = uniforms.projectionMatrix * uniforms.viewMatrix * uniforms.modelMatrix *
+                    instance.modelMatrix * vertexBuffer.position,
+        .worldNormal = (uniforms.modelMatrix * instance.modelMatrix * float4(vertexBuffer.normal, 0)).xyz,
+        .worldPosition = (uniforms.modelMatrix * instance.modelMatrix * vertexBuffer.position).xyz,
+        .uv = vertexBuffer.uv
+    };
+    return out;
+}
+
 fragment float4 fragment_main(VertexOut in  [[stage_in]],
                               constant Material &material [[buffer(11)]],
                               constant FragmentUniforms &fragmentUniforms [[buffer(22)]],
