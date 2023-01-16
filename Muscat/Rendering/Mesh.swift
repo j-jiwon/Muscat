@@ -44,11 +44,32 @@ struct Submesh {
     }
     
     let textures: Textures
+    let pipelineState: MTLRenderPipelineState
     
     init(mdlSubmesh: MDLSubmesh, mtkSubmesh: MTKSubmesh) {
         self.mtkSubmesh = mtkSubmesh
         material = Material(material: mdlSubmesh.material)
         textures = Textures(material: mdlSubmesh.material)
+        pipelineState = Submesh.createPipelineState(textures: textures)
+    }
+    
+    static func createPipelineState(textures: Textures) -> MTLRenderPipelineState {
+        let functionConstants = MTLFunctionConstantValues()
+        var property = textures.baseColor != nil
+        functionConstants.setConstantValue(&property, type: .bool, index: 0)
+        
+        let vertexFunction = Renderer.library.makeFunction(name: "vertex_main")
+        let fragmentFunction = try! Renderer.library.makeFunction(name: "fragment_main",
+                                                                  constantValues: functionConstants)
+        
+        let pipelineStateDescriptor = MTLRenderPipelineDescriptor()
+        pipelineStateDescriptor.colorAttachments[0].pixelFormat = .bgra8Unorm
+        pipelineStateDescriptor.vertexFunction = vertexFunction
+        pipelineStateDescriptor.fragmentFunction = fragmentFunction
+        pipelineStateDescriptor.vertexDescriptor = MTLVertexDescriptor.defaultVertexDescriptor()
+        pipelineStateDescriptor.depthAttachmentPixelFormat = .depth32Float
+        
+        return try! Renderer.device.makeRenderPipelineState(descriptor: pipelineStateDescriptor)
     }
 }
 

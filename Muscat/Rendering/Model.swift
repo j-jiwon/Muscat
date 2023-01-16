@@ -54,6 +54,7 @@ extension Model: Renderable {
                 commandEncoder.setVertexBuffer(vertexBuffer.buffer, offset: 0, index: 0)
                 
                 for submesh in mesh.submeshes {
+                    commandEncoder.setRenderPipelineState(submesh.pipelineState)
                     var material = submesh.material
                     commandEncoder.setFragmentBytes(&material,
                                                     length: MemoryLayout<Material>.stride,

@@ -15,6 +15,8 @@ constant float3 ambientLightColor = float3(1.0, 1.0, 1.0);
 constant float ambientLightIntensity = 0.3;
 constant float3 lightSpecularColor = float3(1.0, 1.0, 1.0);
 
+constant bool hasColorTextures [[function_constant(0)]];
+
 struct VertexIn {
     float4 position [[attribute(0)]];
     float3 normal [[attribute(1)]];
@@ -43,7 +45,8 @@ vertex VertexOut vertex_main(VertexIn vertexBuffer [[stage_in]],
 fragment float4 fragment_main(VertexOut in  [[stage_in]],
                               constant Material &material [[buffer(11)]],
                               constant FragmentUniforms &fragmentUniforms [[buffer(22)]],
-                              texture2d<float>baseColorTexture [[texture(0)]]) {
+                              texture2d<float>baseColorTexture [[texture(0),
+                                                                function_constant(hasColorTextures)]]){
     
     const sampler s(filter::linear);
     
@@ -53,8 +56,12 @@ fragment float4 fragment_main(VertexOut in  [[stage_in]],
     float3 materialSpecularColor = material.specularColor;
     
     float3 diffuseIntensity = saturate(dot(lightVector, normalVector));
-    float3 baseColor = baseColorTexture.sample(s, in.uv).rgb;
-    
+    float3 baseColor;
+    if (hasColorTextures){
+        baseColor = baseColorTexture.sample(s, in.uv).rgb;
+    } else {
+        baseColor = material.baseColor;
+    }
     float3 diffuseColor = baseColor * diffuseIntensity;
     float3 ambientColor = baseColor * ambientLightColor * ambientLightIntensity;
     
