@@ -8,6 +8,13 @@
 import Foundation
 import MetalKit
 
+struct Rect {
+    var x: Float = 0
+    var z: Float = 0
+    var width: Float = 0
+    var height: Float = 0
+}
+
 extension MTLVertexDescriptor {
     static func defaultVertexDescriptor() -> MTLVertexDescriptor{
         let vertexDescriptor = MTLVertexDescriptor()
