@@ -15,6 +15,9 @@ class RayBreak: Scene {
         static let ballSpeed: Float = 10
     }
     
+    var ballVelocity = float3(Constants.ballSpeed, 0, Constants.ballSpeed)
+    
+    
     let paddle = Model(name: "paddle")
     let ball = Model(name: "ball")
     let border = Model(name: "border")
@@ -69,6 +72,44 @@ class RayBreak: Scene {
         setupBricks()
     }
     
+    func bounceBall() {
+        if abs(ball.position.x) > gameArea.width / 2 {
+            ballVelocity.x = -ballVelocity.x
+        }
+        if abs(ball.position.z) > gameArea.height / 2 {
+            ballVelocity.z = -ballVelocity.z
+        }
+        
+        if ball.worldBoundingBox().intersects(rect: paddle.worldBoundingBox()){
+            ballVelocity.z = -ballVelocity.z
+        }
+    }
+    
+    func checkBricks() {
+        var brickToDestroyIndex: Int?
+        for (i, transform) in bricks.transforms.enumerated() {
+            let modelMatrix = bricks.matrix * transform.matrix
+            let brickRect = bricks.worldBoundingBox(matrix: modelMatrix)
+            if ball.worldBoundingBox().intersects(rect: brickRect) {
+                brickToDestroyIndex = i
+                break
+            }
+        }
+        if let index = brickToDestroyIndex {
+            bricks.transforms.remove(at: index)
+            bricks.instanceCount -= 1
+            ballVelocity.z = -ballVelocity.z
+        }
+        
+        if bricks.instanceCount <= 0{
+            remove(node: bricks)
+            print("Game over")
+        }
+    }
+    
     override func updateScene(deltaTime: Float) {
+        ball.position += ballVelocity * deltaTime
+        checkBricks()
+        bounceBall()
     }
 }
