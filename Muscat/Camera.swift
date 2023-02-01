@@ -44,7 +44,13 @@ class ArcballCamera: Camera {
       _viewMatrix = updateViewMatrix()
     }
   }
-    var target = SIMD3<Float>(repeating: 0) {
+  var target = SIMD3<Float>(repeating: 0) {
+    didSet {
+      _viewMatrix = updateViewMatrix()
+    }
+  }
+
+  override var rotation: simd_float3 {
     didSet {
       _viewMatrix = updateViewMatrix()
     }
