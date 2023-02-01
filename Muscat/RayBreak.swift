@@ -15,8 +15,9 @@ class RayBreak: Scene {
         static let ballSpeed: Float = 10
     }
     
-    var ballVelocity = float3(Constants.ballSpeed, 0, Constants.ballSpeed)
+    var ballVelocity = SIMD3<Float>(Constants.ballSpeed, 0, Constants.ballSpeed)
     
+    var lives = 3
     
     let paddle = Model(name: "paddle")
     let ball = Model(name: "ball")
@@ -24,6 +25,33 @@ class RayBreak: Scene {
     let bricks = Instance(name: "brick", instanceCount: Constants.rows * Constants.columns)
     
     var gameArea: (width: Float, height: Float) = (0, 0)
+    
+    var keyLeftDown = false
+    var keyRightDown = false
+    
+    override func keyDown(key: Int, isARepeat: Bool) -> Bool {
+        switch key {
+        case 123:  // left arrow
+            keyLeftDown = true
+        case 124:  // right arrow
+            keyRightDown = true
+        default:
+            return false
+        }
+        return true
+    }
+    
+    override func keyUp(key: Int) -> Bool {
+        switch key {
+        case 123:  // left arrow
+            keyLeftDown = false
+        case 124:  // right arrow
+            keyRightDown = false
+        default:
+            break
+        }
+        return true
+    }
     
     func setupBricks() {
         let margin = gameArea.width * 0.1
@@ -42,11 +70,11 @@ class RayBreak: Scene {
                 let frow = Float(row)
                 let fcol = Float(column)
                 
-                var position = float3(0)
+                var position = SIMD3<Float>(repeating: 0)
                 position.x = margin + hGap * fcol + brickWidth * fcol + halfBricksWidth
                 position.x -= halfGameWidth
                 position.z = vGap * frow + brickWidth * frow
-                let transform = Transform(position: position, rotation: float3(0), scale: 1)
+                let transform = Transform(position: position, rotation: SIMD3<Float>(repeating: 0), scale: 1)
                 bricks.transforms[row * Constants.columns + column] = transform
             }
         }
@@ -77,6 +105,14 @@ class RayBreak: Scene {
             ballVelocity.x = -ballVelocity.x
         }
         if abs(ball.position.z) > gameArea.height / 2 {
+            if ball.position.z < 0 {
+                lives -= 1
+                if lives < 0 {
+                    print("Game Over - You Lost")
+                } else {
+                    print("Lives: ", lives)
+                }
+            }
             ballVelocity.z = -ballVelocity.z
         }
         
@@ -111,5 +147,26 @@ class RayBreak: Scene {
         ball.position += ballVelocity * deltaTime
         checkBricks()
         bounceBall()
+        
+        let oldPaddlePosition = paddle.position.x
+        
+        if keyLeftDown {
+            paddle.position.x -= Constants.paddleSpeed
+        }
+        if keyRightDown {
+            paddle.position.x += Constants.paddleSpeed
+        }
+        let paddleWidth = paddle.worldBoundingBox().width
+        let halfBorderWith = border.worldBoundingBox().width / 2
+        if abs(paddle.position.x) + (paddleWidth / 2) > halfBorderWith {
+            paddle.position.x = oldPaddlePosition
+        }
+        
+        let transforms: [Transform] = bricks.transforms.map {
+            var transform = $0
+            transform.rotation.y += Float.pi / 4 * deltaTime
+            return transform
+        }
+        bricks.transforms = transforms
     }
 }

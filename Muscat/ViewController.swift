@@ -26,6 +26,8 @@ class ViewController: NSViewController {
 
         let pan = NSPanGestureRecognizer(target: self, action: #selector(handlePan))
         view.addGestureRecognizer(pan)
+        
+        addKeyboardMonitoring()
     }
     
     override func scrollWheel(with event: NSEvent) {

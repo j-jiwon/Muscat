@@ -8,6 +8,7 @@
 import Foundation
 import MetalKit
 
+
 struct Rect {
     var x: Float = 0
     var z: Float = 0
@@ -61,3 +62,64 @@ extension MDLVertexDescriptor {
         return vertexDescriptor
     }
 }
+
+#if os(macOS)
+extension Scene {
+  @objc func keyDown(key: Int, isARepeat: Bool) -> Bool {
+    // override this
+    return false
+  }
+  
+  @objc func keyUp(key: Int) -> Bool {
+    // override this
+    return false
+  }
+  
+  @objc func click(location: SIMD2<Float>) {
+    // override
+  }
+}
+
+extension ViewController {
+  func addKeyboardMonitoring() {
+    NSEvent.addLocalMonitorForEvents(matching: .keyDown) {
+      if self.keyDown(with: $0) {
+        return nil
+      } else {
+        return $0
+      }
+    }
+    NSEvent.addLocalMonitorForEvents(matching: .keyUp) {
+      if self.keyUp(with: $0) {
+        return nil
+      } else {
+        return $0
+      }
+    }
+  }
+  
+  func keyDown(with event: NSEvent)-> Bool {
+    guard let window = self.view.window,
+      let scene = scene,
+      NSApplication.shared.keyWindow === window
+      else {
+        return false
+    }
+    return scene.keyDown(key: Int(event.keyCode), isARepeat: event.isARepeat)
+  }
+  
+  func keyUp(with event: NSEvent) -> Bool {
+    guard let window = self.view.window,
+      let scene = scene,
+      NSApplication.shared.keyWindow === window else {
+        return false
+    }
+    return scene.keyUp(key: Int(event.keyCode))
+  }
+  
+  @objc func handleClick(gesture: NSClickGestureRecognizer) {
+    let location = gesture.location(in: metalView)
+    scene?.click(location: SIMD2<Float>(Float(location.x), Float(location.y)))
+  }
+}
+#endif
