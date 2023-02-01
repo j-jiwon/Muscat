@@ -7,10 +7,16 @@
 
 import Foundation
 
+
+protocol SceneDelegate: AnyObject {
+    func transition(to scene: Scene)
+}
+
 class Scene {
     var rootNode = Node()
     var renderables: [Renderable] = []
     var sceneSize: CGSize
+    weak var sceneDelegate: SceneDelegate?
     
     let camera = ArcballCamera()
     var uniforms = Uniforms()

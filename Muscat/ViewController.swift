@@ -18,6 +18,7 @@ class ViewController: NSViewController {
         renderer = Renderer(view: metalView)
         // scene = GameScene(sceneSize: metalView.bounds.size)
         scene = RayBreak(sceneSize: metalView.bounds.size)
+        scene?.sceneDelegate = self
         renderer?.scene = scene
         
         metalView.device = Renderer.device
@@ -26,6 +27,9 @@ class ViewController: NSViewController {
 
         let pan = NSPanGestureRecognizer(target: self, action: #selector(handlePan))
         view.addGestureRecognizer(pan)
+        
+        let click = NSClickGestureRecognizer(target: self, action: #selector(handleClick))
+        view.addGestureRecognizer(click)
         
         addKeyboardMonitoring()
     }
@@ -41,5 +45,13 @@ class ViewController: NSViewController {
       
       scene?.camera.rotate(delta: delta)
       gesture.setTranslation(.zero, in: gesture.view)
+    }
+}
+
+extension ViewController: SceneDelegate {
+    func transition(to scene: Scene) {
+        scene.sceneDelegate = self
+        self.scene = scene
+        renderer?.scene = scene
     }
 }

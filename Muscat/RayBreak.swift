@@ -22,6 +22,8 @@ class RayBreak: Scene {
         static let bounce = "bounce.wav"
     }
     
+    var startGame = false
+    
     var ballVelocity = SIMD3<Float>(Constants.ballSpeed, 0, Constants.ballSpeed)
     
     var lives = 3
@@ -52,6 +54,7 @@ class RayBreak: Scene {
         default:
             return false
         }
+        startGame = true
         return true
     }
     
@@ -125,7 +128,7 @@ class RayBreak: Scene {
             if ball.position.z < 0 {
                 lives -= 1
                 if lives < 0 {
-                    print("Game Over")
+                    gameOver(win: false)
                 } else {
                     print("Lives: ", lives)
                 }
@@ -158,11 +161,14 @@ class RayBreak: Scene {
         
         if bricks.instanceCount <= 0{
             remove(node: bricks)
-            print("WIN")
+            gameOver(win: true)
         }
     }
     
     override func updateScene(deltaTime: Float) {
+        if !startGame {
+            return
+        }
         bounced = false
         
         ball.position += ballVelocity * deltaTime
@@ -193,5 +199,24 @@ class RayBreak: Scene {
         if bounced {
             soundController.playEffect(name: Sounds.bounce)
         }
+    }
+
+    func gameOver(win: Bool) {
+        
+        soundController.stopBackgroundMusic()
+        let sound = win ? Sounds.win : Sounds.lose
+        soundController.playEffect(name: sound)
+        
+        let gameOver = GameOver(sceneSize: sceneSize)
+        gameOver.win = win
+        
+        ballVelocity = SIMD3<Float>(repeating: 0)
+        ball.position = SIMD3<Float>(repeating: 0)
+        remove(node: ball)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            self.sceneDelegate?.transition(to: gameOver)
+        }
+        sceneDelegate?.transition(to: gameOver)
     }
 }
