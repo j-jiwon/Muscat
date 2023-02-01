@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import AVFoundation
 
 class RayBreak: Scene {
     enum Constants {
@@ -13,6 +14,12 @@ class RayBreak: Scene {
         static let rows = 6
         static let paddleSpeed: Float = 0.2
         static let ballSpeed: Float = 10
+    }
+    
+    enum Sounds {
+        static let win = "win.wav"
+        static let lose = "lose.wav"
+        static let bounce = "bounce.wav"
     }
     
     var ballVelocity = SIMD3<Float>(Constants.ballSpeed, 0, Constants.ballSpeed)
@@ -28,6 +35,13 @@ class RayBreak: Scene {
     
     var keyLeftDown = false
     var keyRightDown = false
+    
+    var bounced = false
+    
+    func setupSounds() {
+        soundController.load(soundNames: [Sounds.bounce, Sounds.lose, Sounds.win])
+        soundController.playBackgroundMusic("bulletstorm_bg_v1")
+    }
     
     override func keyDown(key: Int, isARepeat: Bool) -> Bool {
         switch key {
@@ -86,6 +100,8 @@ class RayBreak: Scene {
         camera.distance = 13.5
         camera.target.y = -2
         
+        setupSounds()
+        
         gameArea.width = border.worldBoundingBox().width - 1
         gameArea.height = border.worldBoundingBox().height - 1
         
@@ -103,21 +119,24 @@ class RayBreak: Scene {
     func bounceBall() {
         if abs(ball.position.x) > gameArea.width / 2 {
             ballVelocity.x = -ballVelocity.x
+            bounced = true
         }
         if abs(ball.position.z) > gameArea.height / 2 {
             if ball.position.z < 0 {
                 lives -= 1
                 if lives < 0 {
-                    print("Game Over - You Lost")
+                    print("Game Over")
                 } else {
                     print("Lives: ", lives)
                 }
             }
             ballVelocity.z = -ballVelocity.z
+            bounced = true
         }
         
         if ball.worldBoundingBox().intersects(rect: paddle.worldBoundingBox()){
             ballVelocity.z = -ballVelocity.z
+            bounced = true
         }
     }
     
@@ -139,11 +158,13 @@ class RayBreak: Scene {
         
         if bricks.instanceCount <= 0{
             remove(node: bricks)
-            print("Game over")
+            print("WIN")
         }
     }
     
     override func updateScene(deltaTime: Float) {
+        bounced = false
+        
         ball.position += ballVelocity * deltaTime
         checkBricks()
         bounceBall()
@@ -168,5 +189,9 @@ class RayBreak: Scene {
             return transform
         }
         bricks.transforms = transforms
+        
+        if bounced {
+            soundController.playEffect(name: Sounds.bounce)
+        }
     }
 }

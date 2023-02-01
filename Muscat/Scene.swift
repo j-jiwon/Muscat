@@ -16,6 +16,8 @@ class Scene {
     var uniforms = Uniforms()
     var fragmentUniforms = FragmentUniforms()
     
+    let soundController = SoundController()
+    
     init(sceneSize: CGSize) {
         self.sceneSize = sceneSize
         sceneSizeWillChange(to: sceneSize)
