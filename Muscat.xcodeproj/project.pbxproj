@@ -46,6 +46,8 @@
 		554463C02986B9FA0057C02C /* bulletstorm_bg_v1.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 554463BB2986B9FA0057C02C /* bulletstorm_bg_v1.mp3 */; };
 		554463C12986B9FA0057C02C /* bounce.wav in Resources */ = {isa = PBXBuildFile; fileRef = 554463BC2986B9FA0057C02C /* bounce.wav */; };
 		554463C22986B9FA0057C02C /* lose.wav in Resources */ = {isa = PBXBuildFile; fileRef = 554463BD2986B9FA0057C02C /* lose.wav */; };
+		554463C4298A960B0057C02C /* RayBreak.swift in Sources */ = {isa = PBXBuildFile; fileRef = 554463C3298A960B0057C02C /* RayBreak.swift */; };
+		554463C6298AA4950057C02C /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 554463C5298AA4950057C02C /* Camera.swift */; };
 		55886BC32951FDF500E6D549 /* MathLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55886BC22951FDF500E6D549 /* MathLibrary.swift */; };
 		55886BC72951FF2B00E6D549 /* treefir.obj in Resources */ = {isa = PBXBuildFile; fileRef = 55886BC62951FF2B00E6D549 /* treefir.obj */; };
 		55886BC92951FFA400E6D549 /* Transform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55886BC82951FFA400E6D549 /* Transform.swift */; };
@@ -94,6 +96,8 @@
 		554463BB2986B9FA0057C02C /* bulletstorm_bg_v1.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = bulletstorm_bg_v1.mp3; sourceTree = "<group>"; };
 		554463BC2986B9FA0057C02C /* bounce.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = bounce.wav; sourceTree = "<group>"; };
 		554463BD2986B9FA0057C02C /* lose.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = lose.wav; sourceTree = "<group>"; };
+		554463C3298A960B0057C02C /* RayBreak.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RayBreak.swift; sourceTree = "<group>"; };
+		554463C5298AA4950057C02C /* Camera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
 		55886BC22951FDF500E6D549 /* MathLibrary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MathLibrary.swift; sourceTree = "<group>"; };
 		55886BC62951FF2B00E6D549 /* treefir.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = treefir.obj; sourceTree = "<group>"; };
 		55886BC82951FFA400E6D549 /* Transform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transform.swift; sourceTree = "<group>"; };
@@ -135,7 +139,9 @@
 				55446370297436CA0057C02C /* Rendering */,
 				552E97DE293D56F4003C7055 /* Muscat.entitlements */,
 				552E97D5293D56F3003C7055 /* AppDelegate.swift */,
+				554463C5298AA4950057C02C /* Camera.swift */,
 				5544636C296759700057C02C /* GameScene.swift */,
+				554463C3298A960B0057C02C /* RayBreak.swift */,
 				55886BCA29535AF100E6D549 /* Camera.swift */,
 				55446368296752D90057C02C /* Node.swift */,
 				5544636A296759460057C02C /* Scene.swift */,
@@ -326,6 +332,7 @@
 			files = (
 				552E97E92948D613003C7055 /* Extensions.swift in Sources */,
 				55886BC32951FDF500E6D549 /* MathLibrary.swift in Sources */,
+				554463C6298AA4950057C02C /* Camera.swift in Sources */,
 				552E97E7293EB020003C7055 /* Shaders.metal in Sources */,
 				55446369296752DA0057C02C /* Node.swift in Sources */,
 				552E97D8293D56F3003C7055 /* ViewController.swift in Sources */,
@@ -334,6 +341,7 @@
 				55886BCB29535AF100E6D549 /* Camera.swift in Sources */,
 				5544636D296759700057C02C /* GameScene.swift in Sources */,
 				554463722974408E0057C02C /* Mesh.swift in Sources */,
+				554463C4298A960B0057C02C /* RayBreak.swift in Sources */,
 				5544639229756EAF0057C02C /* Instance.swift in Sources */,
 				5544636F296759B80057C02C /* Renderable.swift in Sources */,
 				5544636B296759460057C02C /* Scene.swift in Sources */,

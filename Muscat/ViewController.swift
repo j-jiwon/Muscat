@@ -16,7 +16,8 @@ class ViewController: NSViewController {
         super.viewDidLoad()
 
         renderer = Renderer(view: metalView)
-        scene = GameScene(sceneSize: metalView.bounds.size)
+        // scene = GameScene(sceneSize: metalView.bounds.size)
+        scene = RayBreak(sceneSize: metalView.bounds.size)
         renderer?.scene = scene
         
         metalView.device = Renderer.device
