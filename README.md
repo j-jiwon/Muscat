@@ -1,11 +1,11 @@
 # Muscat :: Metal Study Project
 
 
-### references
+### References
 - book: [Metal by Tutorials](https://www.kodeco.com/books/metal-by-tutorials/v2.0)
 - lecture: [3D Graphics with Metal](https://www.kodeco.com/1258241-3d-graphics-with-metal/)
 
-### notes
+### Notes
 https://buzzwon.notion.site/Muscat-d37bb7189d474f5b89a3204899fb678a
 
 |week|contents|notes|
@@ -20,3 +20,9 @@ https://buzzwon.notion.site/Muscat-d37bb7189d474f5b89a3204899fb678a
 <img width="476" alt="스크린샷 2023-01-16 오후 9 26 50" src="https://user-images.githubusercontent.com/34727587/212702096-7019f354-1ac5-4461-bbda-6b7c4fecae0f.png">
 
 ![화면_기록_2023-01-16_오후_9_01_31_AdobeExpress](https://user-images.githubusercontent.com/34727587/212702703-8e657466-68ef-4b21-8ecf-8f0048089d88.gif)
+
+
+# Practice
+-  Brick Out
+
+  [![Brick Out](https://img.youtube.com/vi/_zWes1LYyGs/0.jpg)](https://youtu.be/_zWes1LYyGs)
