@@ -54,6 +54,7 @@
 		55886BC72951FF2B00E6D549 /* treefir.obj in Resources */ = {isa = PBXBuildFile; fileRef = 55886BC62951FF2B00E6D549 /* treefir.obj */; };
 		55886BC92951FFA400E6D549 /* Transform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55886BC82951FFA400E6D549 /* Transform.swift */; };
 		55886BCB29535AF100E6D549 /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55886BCA29535AF100E6D549 /* Camera.swift */; };
+		55E72F33298F6E5200253B7E /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 55E72F32298F6E5200253B7E /* .gitignore */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -107,6 +108,7 @@
 		55886BC82951FFA400E6D549 /* Transform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transform.swift; sourceTree = "<group>"; };
 		55886BCA29535AF100E6D549 /* Camera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
 		55886BCC29535E3700E6D549 /* Common.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Common.h; sourceTree = "<group>"; };
+		55E72F32298F6E5200253B7E /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -123,6 +125,7 @@
 		552E97C9293D56F3003C7055 = {
 			isa = PBXGroup;
 			children = (
+				55E72F32298F6E5200253B7E /* .gitignore */,
 				552E97D4293D56F3003C7055 /* Muscat */,
 				552E97D3293D56F3003C7055 /* Products */,
 			);
@@ -299,6 +302,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				554463AB2976B3540057C02C /* youlose.obj in Resources */,
+				55E72F33298F6E5200253B7E /* .gitignore in Resources */,
 				55886BC72951FF2B00E6D549 /* treefir.obj in Resources */,
 				554463C02986B9FA0057C02C /* bulletstorm_bg_v1.mp3 in Resources */,
 				554463C22986B9FA0057C02C /* lose.wav in Resources */,
