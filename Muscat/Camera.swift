@@ -18,9 +18,9 @@ class Camera: Node{
   var aspect: Float = 1
   
   var viewMatrix: float4x4 {
-    let translateMatrix = float4x4(translation: transform.position)
-    let rotateMatrix = float4x4(rotation: transform.rotation)
-    let scaleMatrix = float4x4(scaling: transform.scale)
+    let translateMatrix = float4x4(translation: position)
+    let rotateMatrix = float4x4(rotation: rotation)
+    let scaleMatrix = float4x4(scaling: scale)
     return (translateMatrix * scaleMatrix * rotateMatrix).inverse
   }
   
@@ -44,7 +44,13 @@ class ArcballCamera: Camera {
       _viewMatrix = updateViewMatrix()
     }
   }
-    var target = SIMD3<Float>(repeating: 0) {
+  var target = SIMD3<Float>(repeating: 0) {
+    didSet {
+      _viewMatrix = updateViewMatrix()
+    }
+  }
+
+  override var rotation: simd_float3 {
     didSet {
       _viewMatrix = updateViewMatrix()
     }
@@ -63,11 +69,11 @@ class ArcballCamera: Camera {
   
   private func updateViewMatrix() -> float4x4 {
     let translateMatrix = float4x4(translation: [target.x, target.y, target.z - distance])
-    let rotateMatrix = float4x4(rotationYXZ: [-transform.rotation.x,
-                                              transform.rotation.y,
+    let rotateMatrix = float4x4(rotationYXZ: [-rotation.x,
+                                              rotation.y,
                                               0])
     let matrix = (rotateMatrix * translateMatrix).inverse
-    transform.position = rotateMatrix.upperLeft * -matrix.columns.3.xyz
+    position = rotateMatrix.upperLeft * -matrix.columns.3.xyz
     return matrix
   }
   
@@ -79,10 +85,10 @@ class ArcballCamera: Camera {
   
   override func rotate(delta: SIMD2<Float>) {
     let sensitivity: Float = 0.005
-    transform.rotation.y += delta.x * sensitivity
-    transform.rotation.x += delta.y * sensitivity
-    transform.rotation.x = max(-Float.pi/2,
-                               min(transform.rotation.x,
+    rotation.y += delta.x * sensitivity
+    rotation.x += delta.y * sensitivity
+    rotation.x = max(-Float.pi/2,
+                               min(rotation.x,
                                    Float.pi/2))
     _viewMatrix = updateViewMatrix()
   }
