@@ -23,6 +23,16 @@ https://buzzwon.notion.site/Muscat-d37bb7189d474f5b89a3204899fb678a
 
 
 # Practice
--  Brick Out
+## [ Brick Out ]
+video! click the image.
+[![Brick Out](https://img.youtube.com/vi/_zWes1LYyGs/0.jpg)](https://youtu.be/_zWes1LYyGs)
 
-  [![Brick Out](https://img.youtube.com/vi/_zWes1LYyGs/0.jpg)](https://youtu.be/_zWes1LYyGs)
+
+## [ Visualizer ]
+Notes >> https://buzzwon.notion.site/Practice-Visualizer-2b87976683574ca2a4b3df712d46fee7
+
+### Part1. Wave Plane
+<img src="https://user-images.githubusercontent.com/34727587/219145590-fa448bed-492f-4e14-800b-80db08796579.gif" width="500" height="300"/>
+
+### Part2. Audio Visualizer
+TBC.
