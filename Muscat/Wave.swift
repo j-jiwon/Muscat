@@ -12,6 +12,7 @@ import MetalKit
 class Plane: Node {
     var mesh: MTKMesh!
     var pipelineState: MTLRenderPipelineState!
+    var timer: Float = 0
     
     init(name: String) {
         let allocator = MTKMeshBufferAllocator(device: Renderer.device)
@@ -54,6 +55,12 @@ extension Plane: Renderable {
         commandEncoder.setRenderPipelineState(pipelineState)
         
         uniforms.modelMatrix = worldMatrix
+        
+        timer += 0.05
+        var currentTime = timer
+        
+        commandEncoder.setVertexBytes(&currentTime, length: MemoryLayout<Float>.stride, index: 2)
+
         commandEncoder.setVertexBytes(&uniforms,
                                       length: MemoryLayout<Uniforms>.stride,
                                       index: 21)
@@ -76,9 +83,9 @@ extension Plane: Renderable {
 class Wave : Scene {
 
     override func setupScene() {
-        camera.target = [0, 0.4, 0]
+        camera.target = [0, 0.45, -0.3]
         camera.distance = 3
-        camera.rotation = [-0.4, -0.4, 0]
+        camera.rotation = [-0.4, -0.8, 0]
 
         let plane = Plane(name: "plane")
         add(node: plane)
