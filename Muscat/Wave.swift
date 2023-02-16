@@ -17,7 +17,7 @@ class Plane: Node {
     init(name: String) {
         let allocator = MTKMeshBufferAllocator(device: Renderer.device)
         
-        let mdlMesh = MDLMesh(planeWithExtent: float3(2, 0, 2), segments: vector_uint2(100, 100),
+        let mdlMesh = MDLMesh(planeWithExtent: float3(3, 0, 3), segments: vector_uint2(100, 100),
                               geometryType: .triangles, allocator: allocator)
 
         mesh = try! MTKMesh(mesh: mdlMesh, device: Renderer.device)
@@ -84,7 +84,7 @@ class Wave : Scene {
 
     override func setupScene() {
         camera.target = [0, 0.45, -0.3]
-        camera.distance = 3
+        camera.distance = 4
         camera.rotation = [-0.4, -0.8, 0]
 
         let plane = Plane(name: "plane")

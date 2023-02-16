@@ -20,7 +20,7 @@ struct VertexOut {
     float3 worldNormal;
     float3 worldPosition;
     float2 uv;
-    float3 color;
+    float4 color;
 };
 
 vertex VertexOut vertex_wave(VertexIn in [[ stage_in ]],
@@ -31,7 +31,7 @@ vertex VertexOut vertex_wave(VertexIn in [[ stage_in ]],
     float x = abs(0.5f - in.uv.x);
     float y = abs(0.5f - in.uv.y);
     float dist = sqrt(x * x + y * y);
-    dist = sin(dist * 30 - timer) * 0.1;
+    dist = sin(dist * 50 - timer) * 0.1;
     
     float4 pos = float4(in.position.x, in.position.y - dist, in.position.z, 1.0f);
     
@@ -39,10 +39,11 @@ vertex VertexOut vertex_wave(VertexIn in [[ stage_in ]],
     out.worldNormal = (uniforms.modelMatrix * float4(in.normal, 0)).xyz;
     out.worldPosition = (uniforms.modelMatrix * in.position).xyz;
     out.uv = in.uv;
-    out.color = timer;
+    out.color = pos;
     return out;
 }
 
 fragment float4 fragment_wave(VertexOut in [[stage_in]]) {
-    return float4(in.uv, 0, 1);
+    float val = in.color.y * 3;
+    return float4(0.6 + val, 0.5 + val, 1 - (val + 0.5), 1.0);
 }
