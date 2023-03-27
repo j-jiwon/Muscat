@@ -16,7 +16,7 @@ class ViewController: NSViewController {
         super.viewDidLoad()
 
         renderer = Renderer(view: metalView)
-        scene = Wave(sceneSize: metalView.bounds.size)
+        scene = MirrorBall(sceneSize: metalView.bounds.size)
         scene?.sceneDelegate = self
         renderer?.scene = scene
         

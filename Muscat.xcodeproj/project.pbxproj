@@ -55,6 +55,9 @@
 		55A99704299D387100DB2B9A /* WaveShader.metal in Sources */ = {isa = PBXBuildFile; fileRef = 55A99703299D387100DB2B9A /* WaveShader.metal */; };
 		55A99706299D39DD00DB2B9A /* Wave.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A99705299D39DD00DB2B9A /* Wave.swift */; };
 		55E72F33298F6E5200253B7E /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 55E72F32298F6E5200253B7E /* .gitignore */; };
+		55EBB2D929CA87610085D5E6 /* bunny.obj in Resources */ = {isa = PBXBuildFile; fileRef = 55EBB2D829CA87610085D5E6 /* bunny.obj */; };
+		55EBB2DB29D1B5D20085D5E6 /* MirrorBallShader.metal in Sources */ = {isa = PBXBuildFile; fileRef = 55EBB2DA29D1B5D20085D5E6 /* MirrorBallShader.metal */; };
+		55EBB2DD29D1BA780085D5E6 /* MirrorBall.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EBB2DC29D1BA780085D5E6 /* MirrorBall.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -109,6 +112,9 @@
 		55A99703299D387100DB2B9A /* WaveShader.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = WaveShader.metal; sourceTree = "<group>"; };
 		55A99705299D39DD00DB2B9A /* Wave.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Wave.swift; sourceTree = "<group>"; };
 		55E72F32298F6E5200253B7E /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		55EBB2D829CA87610085D5E6 /* bunny.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = bunny.obj; sourceTree = "<group>"; };
+		55EBB2DA29D1B5D20085D5E6 /* MirrorBallShader.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = MirrorBallShader.metal; sourceTree = "<group>"; };
+		55EBB2DC29D1BA780085D5E6 /* MirrorBall.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MirrorBall.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -155,6 +161,7 @@
 				55886BC82951FFA400E6D549 /* Transform.swift */,
 				552E97D7293D56F3003C7055 /* ViewController.swift */,
 				55A99705299D39DD00DB2B9A /* Wave.swift */,
+				55EBB2DC29D1BA780085D5E6 /* MirrorBall.swift */,
 				552E97D9293D56F4003C7055 /* Assets.xcassets */,
 				552E97DB293D56F4003C7055 /* Main.storyboard */,
 			);
@@ -164,6 +171,7 @@
 		552E97F0294A22B5003C7055 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				55EBB2D829CA87610085D5E6 /* bunny.obj */,
 				554463932976B3540057C02C /* Game Models */,
 				5544638F2974FABD0057C02C /* treefir.mtl */,
 				5544637529745B290057C02C /* train-color.png */,
@@ -180,6 +188,7 @@
 				55886BCC29535E3700E6D549 /* Common.h */,
 				552E97E6293EB020003C7055 /* Shaders.metal */,
 				55A99703299D387100DB2B9A /* WaveShader.metal */,
+				55EBB2DA29D1B5D20085D5E6 /* MirrorBallShader.metal */,
 				552E97E82948D613003C7055 /* Extensions.swift */,
 				55886BC22951FDF500E6D549 /* MathLibrary.swift */,
 				552E97EA294A2000003C7055 /* Model.swift */,
@@ -327,6 +336,7 @@
 				552E97DD293D56F4003C7055 /* Main.storyboard in Resources */,
 				552E97EE294A2298003C7055 /* train.mtl in Resources */,
 				554463A92976B3540057C02C /* brick.mtl in Resources */,
+				55EBB2D929CA87610085D5E6 /* bunny.obj in Resources */,
 				554463B22976B3540057C02C /* border.mtl in Resources */,
 				554463BF2986B9FA0057C02C /* win.wav in Resources */,
 				554463B32976B3550057C02C /* brick.png in Resources */,
@@ -344,12 +354,14 @@
 				552E97E92948D613003C7055 /* Extensions.swift in Sources */,
 				55886BC32951FDF500E6D549 /* MathLibrary.swift in Sources */,
 				552E97E7293EB020003C7055 /* Shaders.metal in Sources */,
+				55EBB2DB29D1B5D20085D5E6 /* MirrorBallShader.metal in Sources */,
 				55446369296752DA0057C02C /* Node.swift in Sources */,
 				552E97D8293D56F3003C7055 /* ViewController.swift in Sources */,
 				552E97EB294A2000003C7055 /* Model.swift in Sources */,
 				554463C8298AD5670057C02C /* SoundController.swift in Sources */,
 				552E97E5293D5969003C7055 /* Renderer.swift in Sources */,
 				55886BCB29535AF100E6D549 /* Camera.swift in Sources */,
+				55EBB2DD29D1BA780085D5E6 /* MirrorBall.swift in Sources */,
 				5544636D296759700057C02C /* GameScene.swift in Sources */,
 				554463722974408E0057C02C /* Mesh.swift in Sources */,
 				554463CC298B25D50057C02C /* Camera.swift in Sources */,
