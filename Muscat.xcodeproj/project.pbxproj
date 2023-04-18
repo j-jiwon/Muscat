@@ -53,11 +53,11 @@
 		55886BC92951FFA400E6D549 /* Transform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55886BC82951FFA400E6D549 /* Transform.swift */; };
 		55886BCB29535AF100E6D549 /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55886BCA29535AF100E6D549 /* Camera.swift */; };
 		55A99704299D387100DB2B9A /* WaveShader.metal in Sources */ = {isa = PBXBuildFile; fileRef = 55A99703299D387100DB2B9A /* WaveShader.metal */; };
-		55A99706299D39DD00DB2B9A /* Wave.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A99705299D39DD00DB2B9A /* Wave.swift */; };
 		55E72F33298F6E5200253B7E /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 55E72F32298F6E5200253B7E /* .gitignore */; };
 		55EBB2D929CA87610085D5E6 /* bunny.obj in Resources */ = {isa = PBXBuildFile; fileRef = 55EBB2D829CA87610085D5E6 /* bunny.obj */; };
 		55EBB2DB29D1B5D20085D5E6 /* MirrorBallShader.metal in Sources */ = {isa = PBXBuildFile; fileRef = 55EBB2DA29D1B5D20085D5E6 /* MirrorBallShader.metal */; };
-		55EBB2DD29D1BA780085D5E6 /* MirrorBall.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EBB2DC29D1BA780085D5E6 /* MirrorBall.swift */; };
+		55EBB2DF29D3E4390085D5E6 /* environment.png in Resources */ = {isa = PBXBuildFile; fileRef = 55EBB2DE29D3E4380085D5E6 /* environment.png */; };
+		55EBB2E129DCE2720085D5E6 /* MirrorBallRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EBB2E029DCE2720085D5E6 /* MirrorBallRenderer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -110,11 +110,11 @@
 		55886BCA29535AF100E6D549 /* Camera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
 		55886BCC29535E3700E6D549 /* Common.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Common.h; sourceTree = "<group>"; };
 		55A99703299D387100DB2B9A /* WaveShader.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = WaveShader.metal; sourceTree = "<group>"; };
-		55A99705299D39DD00DB2B9A /* Wave.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Wave.swift; sourceTree = "<group>"; };
 		55E72F32298F6E5200253B7E /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		55EBB2D829CA87610085D5E6 /* bunny.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = bunny.obj; sourceTree = "<group>"; };
 		55EBB2DA29D1B5D20085D5E6 /* MirrorBallShader.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = MirrorBallShader.metal; sourceTree = "<group>"; };
-		55EBB2DC29D1BA780085D5E6 /* MirrorBall.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MirrorBall.swift; sourceTree = "<group>"; };
+		55EBB2DE29D3E4380085D5E6 /* environment.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = environment.png; sourceTree = "<group>"; };
+		55EBB2E029DCE2720085D5E6 /* MirrorBallRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MirrorBallRenderer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -160,10 +160,9 @@
 				5544636A296759460057C02C /* Scene.swift */,
 				55886BC82951FFA400E6D549 /* Transform.swift */,
 				552E97D7293D56F3003C7055 /* ViewController.swift */,
-				55A99705299D39DD00DB2B9A /* Wave.swift */,
-				55EBB2DC29D1BA780085D5E6 /* MirrorBall.swift */,
 				552E97D9293D56F4003C7055 /* Assets.xcassets */,
 				552E97DB293D56F4003C7055 /* Main.storyboard */,
+				55EBB2E029DCE2720085D5E6 /* MirrorBallRenderer.swift */,
 			);
 			path = Muscat;
 			sourceTree = "<group>";
@@ -234,6 +233,7 @@
 		554463B72986B95D0057C02C /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				55EBB2DE29D3E4380085D5E6 /* environment.png */,
 				554463B82986B9710057C02C /* Sounds */,
 				552E97F0294A22B5003C7055 /* Models */,
 			);
@@ -318,6 +318,7 @@
 				554463A72976B3540057C02C /* paddle.obj in Resources */,
 				554463AC2976B3540057C02C /* youwin.mtl in Resources */,
 				552E97EF294A2298003C7055 /* train.obj in Resources */,
+				55EBB2DF29D3E4390085D5E6 /* environment.png in Resources */,
 				554463B42976B3550057C02C /* paddle.mtl in Resources */,
 				554463AF2976B3540057C02C /* border.obj in Resources */,
 				554463B12976B3540057C02C /* ball.mtl in Resources */,
@@ -361,13 +362,12 @@
 				554463C8298AD5670057C02C /* SoundController.swift in Sources */,
 				552E97E5293D5969003C7055 /* Renderer.swift in Sources */,
 				55886BCB29535AF100E6D549 /* Camera.swift in Sources */,
-				55EBB2DD29D1BA780085D5E6 /* MirrorBall.swift in Sources */,
 				5544636D296759700057C02C /* GameScene.swift in Sources */,
 				554463722974408E0057C02C /* Mesh.swift in Sources */,
 				554463CC298B25D50057C02C /* Camera.swift in Sources */,
 				5544639229756EAF0057C02C /* Instance.swift in Sources */,
 				5544636F296759B80057C02C /* Renderable.swift in Sources */,
-				55A99706299D39DD00DB2B9A /* Wave.swift in Sources */,
+				55EBB2E129DCE2720085D5E6 /* MirrorBallRenderer.swift in Sources */,
 				5544636B296759460057C02C /* Scene.swift in Sources */,
 				55886BC92951FFA400E6D549 /* Transform.swift in Sources */,
 				552E97D6293D56F3003C7055 /* AppDelegate.swift in Sources */,

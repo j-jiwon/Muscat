@@ -55,6 +55,28 @@ func degrees(fromRadians radians: Float) -> Float {
   return (radians / π) * 180
 }
 
+func align(_ value: Int, upTo alignment: Int) -> Int {
+    return ((value + alignment - 1) / alignment) * alignment
+}
+
+func gcd(_ m: Int, _ n: Int) -> Int {
+    var a = 0
+    var b = max(m, n)
+    var r = min(m, n)
+
+    while r != 0 {
+        a = b
+        b = r
+        r = a % b
+    }
+    return b
+}
+
+func lcm(_ m: Int, _ n: Int) -> Int {
+    return m * n / gcd(m, n)
+}
+
+
 extension float4x4 {
   
   // MARK: - Translate
@@ -134,11 +156,12 @@ extension float4x4 {
   init(projectionFov fov: Float, near: Float, far: Float, aspect: Float) {
     let y = 1 / tan(fov * 0.5)
     let x = y / aspect
-    let z = far / (far - near)
+    let z = -(far+near) / (far - near)
+    let tz = -2 * far * near / (far - near)
     let X = SIMD4<Float>( x,  0,  0,  0)
     let Y = SIMD4<Float>( 0,  y,  0,  0)
-    let Z = SIMD4<Float>( 0,  0,  z, 1)
-    let W = SIMD4<Float>( 0,  0,  z * -near,  0)
+    let Z = SIMD4<Float>( 0,  0,  z, -1)
+    let W = SIMD4<Float>( 0,  0,  tz,  0)
     self.init()
     columns = (X, Y, Z, W)
   }
@@ -171,4 +194,3 @@ extension float4 {
     }
   }
 }
-

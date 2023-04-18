@@ -8,49 +8,53 @@
 import Cocoa
 import MetalKit
 class ViewController: NSViewController {
-    @IBOutlet var metalView: MTKView!
-    var renderer: Renderer?
-    var scene: Scene?
+    @IBOutlet weak var metalView: MTKView!
+    var renderer: MirrorballRenderer!
+    
+    let camera = ArcballCamera()
+//    var scene: Scene?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        renderer = Renderer(view: metalView)
-        scene = MirrorBall(sceneSize: metalView.bounds.size)
-        scene?.sceneDelegate = self
-        renderer?.scene = scene
+        let device = metalView.preferredDevice ?? MTLCreateSystemDefaultDevice()!
+        renderer = MirrorballRenderer(device: device, view: metalView)
+//        scene = MirrorBall(sceneSize: metalView.bounds.size)
+//        scene = Wave(sceneSize: metalView.bounds.size)
+//        scene?.sceneDelegate = self
+//        renderer?.scene = scene
         
-        metalView.device = Renderer.device
+//        metalView.device = Renderer.device
         metalView.delegate = renderer
         metalView.clearColor = MTLClearColor(red: 0.1, green: 0.1, blue: 0.1, alpha: 1.0)
 
         let pan = NSPanGestureRecognizer(target: self, action: #selector(handlePan))
         view.addGestureRecognizer(pan)
+                
+//        let click = NSClickGestureRecognizer(target: self, action: #selector(handleClick))
+//        view.addGestureRecognizer(click)
         
-        let click = NSClickGestureRecognizer(target: self, action: #selector(handleClick))
-        view.addGestureRecognizer(click)
-        
-        addKeyboardMonitoring()
-    }
+//        addKeyboardMonitoring()
     
+    }
     override func scrollWheel(with event: NSEvent) {
-        scene?.camera.zoom(delta: Float(event.deltaY))
+        camera.zoom(delta: Float(event.deltaY))
     }
 
     @objc func handlePan(gesture: NSPanGestureRecognizer) {
       let translation = gesture.translation(in: gesture.view)
       let delta = SIMD2<Float>(Float(translation.x),
                                Float(translation.y))
-      
-      scene?.camera.rotate(delta: delta)
-      gesture.setTranslation(.zero, in: gesture.view)
+//
+//      scene?.camera.rotate(delta: delta)
+//      gesture.setTranslation(.zero, in: gesture.view)
+//    }
     }
 }
 
-extension ViewController: SceneDelegate {
-    func transition(to scene: Scene) {
-        scene.sceneDelegate = self
-        self.scene = scene
-        renderer?.scene = scene
-    }
-}
+//extension ViewController: SceneDelegate {
+//    func transition(to scene: Scene) {
+//        scene.sceneDelegate = self
+//        self.scene = scene
+//        renderer?.scene = scene
+//    }
+//}

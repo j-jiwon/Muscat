@@ -10,9 +10,11 @@ import MetalKit
 
 class Model: Node {
     let meshes: [Mesh]
+    var fileTye: String
     
-    init(name: String) {
-        let assetUrl = Bundle.main.url(forResource: name, withExtension: "obj")!
+    init(name: String, fileType: String = "obj") {
+        self.fileTye = fileType
+        let assetUrl = Bundle.main.url(forResource: name, withExtension: fileType)!
         let allocator = MTKMeshBufferAllocator(device: Renderer.device)
         
         let vertexDescriptor = MDLVertexDescriptor.defaultVertexDescriptor()

@@ -48,6 +48,14 @@ extension MTLVertexDescriptor {
 
 
 extension MDLVertexDescriptor {
+    var vertexAttributes: [MDLVertexAttribute] {
+        return attributes as! [MDLVertexAttribute]
+    }
+
+    var bufferLayouts: [MDLVertexBufferLayout] {
+        return layouts as! [MDLVertexBufferLayout]
+    }
+    
     static func defaultVertexDescriptor () -> MDLVertexDescriptor {
         let vertexDescriptor = MTKModelIOVertexDescriptorFromMetal(MTLVertexDescriptor.defaultVertexDescriptor())
         let attributePosition = vertexDescriptor.attributes[0] as! MDLVertexAttribute
@@ -80,46 +88,46 @@ extension Scene {
   }
 }
 
-extension ViewController {
-  func addKeyboardMonitoring() {
-    NSEvent.addLocalMonitorForEvents(matching: .keyDown) {
-      if self.keyDown(with: $0) {
-        return nil
-      } else {
-        return $0
-      }
-    }
-    NSEvent.addLocalMonitorForEvents(matching: .keyUp) {
-      if self.keyUp(with: $0) {
-        return nil
-      } else {
-        return $0
-      }
-    }
-  }
+//extension ViewController {
+//  func addKeyboardMonitoring() {
+//    NSEvent.addLocalMonitorForEvents(matching: .keyDown) {
+//      if self.keyDown(with: $0) {
+//        return nil
+//      } else {
+//        return $0
+//      }
+//    }
+//    NSEvent.addLocalMonitorForEvents(matching: .keyUp) {
+//      if self.keyUp(with: $0) {
+//        return nil
+//      } else {
+//        return $0
+//      }
+//    }
+//  }
   
-  func keyDown(with event: NSEvent)-> Bool {
-    guard let window = self.view.window,
-      let scene = scene,
-      NSApplication.shared.keyWindow === window
-      else {
-        return false
-    }
-    return scene.keyDown(key: Int(event.keyCode), isARepeat: event.isARepeat)
-  }
-  
-  func keyUp(with event: NSEvent) -> Bool {
-    guard let window = self.view.window,
-      let scene = scene,
-      NSApplication.shared.keyWindow === window else {
-        return false
-    }
-    return scene.keyUp(key: Int(event.keyCode))
-  }
-  
-  @objc func handleClick(gesture: NSClickGestureRecognizer) {
-    let location = gesture.location(in: metalView)
-    scene?.click(location: SIMD2<Float>(Float(location.x), Float(location.y)))
-  }
-}
+//  func keyDown(with event: NSEvent)-> Bool {
+//    guard let window = self.view.window,
+//      let scene = scene,
+//      NSApplication.shared.keyWindow === window
+//      else {
+//        return false
+//    }
+//    return scene.keyDown(key: Int(event.keyCode), isARepeat: event.isARepeat)
+//  }
+//
+//  func keyUp(with event: NSEvent) -> Bool {
+//    guard let window = self.view.window,
+//      let scene = scene,
+//      NSApplication.shared.keyWindow === window else {
+//        return false
+//    }
+//    return scene.keyUp(key: Int(event.keyCode))
+//  }
+//
+//  @objc func handleClick(gesture: NSClickGestureRecognizer) {
+//    let location = gesture.location(in: metalView)
+//    scene?.click(location: SIMD2<Float>(Float(location.x), Float(location.y)))
+//  }
+//}
 #endif

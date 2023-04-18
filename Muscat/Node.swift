@@ -7,9 +7,11 @@
 
 import Foundation
 import ModelIO
+import MetalKit
 
 class Node {
     var name = "Untitled"
+    var mesh: MTKMesh?
     
     var position = SIMD3<Float>(repeating: 0)
     var rotation = SIMD3<Float>(repeating: 0)
