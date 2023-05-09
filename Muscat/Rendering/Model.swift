@@ -10,6 +10,7 @@ import MetalKit
 
 class Model: Node {
     let meshes: [Mesh]
+    let samplerState: MTLSamplerState!
     
     init(name: String) {
         let assetUrl = Bundle.main.url(forResource: name, withExtension: "obj")!
@@ -27,15 +28,25 @@ class Model: Node {
         meshes = zip(mdlMeshes, mtkMeshes).map {
             Mesh(mdlMesh: $0.0, mtkMesh: $0.1)
         }
+        let samplerDescriptor = MTLSamplerDescriptor()
+        samplerDescriptor.normalizedCoordinates = true
+        samplerDescriptor.magFilter = .linear
+        samplerDescriptor.minFilter = .linear
+        samplerDescriptor.mipFilter = .linear
+        samplerDescriptor.sAddressMode = .repeat
+        samplerDescriptor.tAddressMode = .repeat
+        
+        samplerState = Renderer.device.makeSamplerState(descriptor: samplerDescriptor)
         
         super.init()
         self.name = name
         self.boundingBox = mdlMeshes[0].boundingBox
+        
     }
     
     func render(commandEncoder: MTLRenderCommandEncoder, submesh: Submesh) {
         let mtkSubmesh = submesh.mtkSubmesh
-        
+        commandEncoder.setFragmentSamplerState(samplerState, index: 1)
         commandEncoder.drawIndexedPrimitives(type: .triangle,
                                              indexCount: mtkSubmesh.indexCount,
                                              indexType: mtkSubmesh.indexType,
@@ -52,6 +63,12 @@ extension Model: Renderable {
         var fragmentUniforms = fragment
         
         uniforms.modelMatrix = worldMatrix
+        fragmentUniforms.inverseViewMatrix = vertex.viewMatrix.inverse
+        
+        var clipToViewDirectionTransform = (vertex.projectionMatrix * vertex.viewMatrix).inverse
+        commandEncoder.setFragmentBytes(&clipToViewDirectionTransform, length: MemoryLayout<float4x4>.size, index: 6)
+
+        
         commandEncoder.setVertexBytes(&uniforms,
                                       length: MemoryLayout<Uniforms>.stride,
                                       index: 21)

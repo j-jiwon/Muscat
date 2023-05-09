@@ -18,13 +18,11 @@ class Skybox: Node {
     var depthStencilState: MTLDepthStencilState!
     
     init(name: String) {
-        let allocator = MTKMeshBufferAllocator(device: Renderer.device)
-        
         let cubeTextureOptions: [MTKTextureLoader.Option : Any] = [
             .textureUsage : MTLTextureUsage.shaderRead.rawValue,
             .textureStorageMode : MTLStorageMode.private.rawValue,
             .generateMipmaps : true,
-            .cubeLayout : MTKTextureLoader.CubeLayout.vertical
+            .cubeLayout : MTKTextureLoader.CubeLayout.vertical,
         ]
         let environmentTextureURL = Bundle.main.url(forResource: "environment", withExtension: "png")!
         environmentTexture = try? MTKTextureLoader(device: Renderer.device).newTexture(URL: environmentTextureURL, options: cubeTextureOptions)
@@ -59,19 +57,13 @@ extension Skybox: Renderable {
     func render(commandEncoder: MTLRenderCommandEncoder,
                 uniforms vertex: Uniforms,
                 fragmentUniforms fragment: FragmentUniforms){
-        var uniforms = vertex
-        var fragmentUniforms = fragment
         
         commandEncoder.setDepthStencilState(depthStencilState)
         commandEncoder.setFrontFacing(.counterClockwise)
         commandEncoder.setCullMode(.back)
         
         commandEncoder.setRenderPipelineState(pipelineState)
-        
-        uniforms.modelMatrix = worldMatrix
-        
-        timer += 0.05
-        var currentTime = timer
+                
         var clipToViewDirectionTransform = (vertex.projectionMatrix * vertex.viewMatrix).inverse
         
         commandEncoder.setFragmentBytes(&clipToViewDirectionTransform, length: MemoryLayout<float4x4>.size, index: 0)
@@ -83,17 +75,49 @@ extension Skybox: Renderable {
     }
 }
 
-class MirrorBall : Scene {
+class Sphere: Model{
+    let environmentTexture: MTLTexture!
+    var timer : Float = 0
 
+    override init(name: String) {
+        let cubeTextureOptions: [MTKTextureLoader.Option : Any] = [
+            .textureUsage : MTLTextureUsage.shaderRead.rawValue,
+            .textureStorageMode : MTLStorageMode.private.rawValue,
+            .generateMipmaps : true,
+            .cubeLayout : MTKTextureLoader.CubeLayout.vertical,
+        ]
+        let environmentTextureURL = Bundle.main.url(forResource: "environment", withExtension: "png")!
+        environmentTexture = try? MTKTextureLoader(device: Renderer.device).newTexture(URL: environmentTextureURL, options: cubeTextureOptions)
+        
+        super.init(name: name)
+    }
+    
+    override func render(commandEncoder: MTLRenderCommandEncoder, submesh: Submesh) {
+        timer += 0.05
+        var currentTime = timer
+        
+        commandEncoder.setVertexBytes(&currentTime, length: MemoryLayout<Float>.stride, index: 2)
+        
+        commandEncoder.setFragmentTexture(environmentTexture, index: 3)
+        super.render(commandEncoder: commandEncoder, submesh: submesh)
+    }
+}
+
+
+class MirrorBall : Scene {
+    let skybox = Skybox(name: "skybox")
+    let sphere = Sphere(name: "sphere")
+    
     override func setupScene() {
         camera.target = [0, 0.45, -0.3]
         camera.distance = 4
         camera.rotation = [-0.4, -0.8, 0]
 
-        let skybox = Skybox(name: "skybox")
         add(node: skybox)
-        
-        let sphere = Model(name: "sphere")
         add(node: sphere)
+    }
+    
+    override func updateScene(deltaTime: Float) {
+        sphere.rotation.y += Float.pi / 4 * deltaTime
     }
 }
