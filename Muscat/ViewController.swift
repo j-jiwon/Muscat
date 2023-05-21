@@ -16,14 +16,13 @@ class ViewController: NSViewController {
         super.viewDidLoad()
 
         renderer = Renderer(view: metalView)
-        // scene = GameScene(sceneSize: metalView.bounds.size)
-        scene = RayBreak(sceneSize: metalView.bounds.size)
+        scene = Wave(sceneSize: metalView.bounds.size)
         scene?.sceneDelegate = self
         renderer?.scene = scene
         
         metalView.device = Renderer.device
         metalView.delegate = renderer
-        metalView.clearColor = MTLClearColor(red: 1.0, green: 1.0, blue: 0.8, alpha: 1.0)
+        metalView.clearColor = MTLClearColor(red: 0.1, green: 0.1, blue: 0.1, alpha: 1.0)
 
         let pan = NSPanGestureRecognizer(target: self, action: #selector(handlePan))
         view.addGestureRecognizer(pan)
