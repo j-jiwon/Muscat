@@ -75,7 +75,9 @@ fragment float4 fragment_main(VertexOut in  [[stage_in]],
     if (hasColorTextures){
         baseColor = baseColorTexture.sample(s, in.uv).rgb;
     } else {
-        baseColor = material.baseColor;
+        // NOTE : temp
+        // baseColor = material.baseColor;
+        baseColor = float3(0.5, 0.5, 0.5);
     }
     float3 diffuseColor = baseColor * diffuseIntensity;
     float3 ambientColor = baseColor * ambientLightColor * ambientLightIntensity;

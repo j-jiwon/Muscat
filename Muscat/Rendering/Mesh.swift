@@ -51,7 +51,7 @@ struct Submesh {
         self.mtkSubmesh = mtkSubmesh
         material = Material(material: mdlSubmesh.material)
         textures = Textures(material: mdlSubmesh.material)
-        pipelineState = Submesh.createPipelineState(vertexFunctionName: "vertex_main",
+        pipelineState = Submesh.createPipelineState(vertexFunctionName: "vertex_mirrorball",
                                                     textures: textures)
         instancedPipelineState = Submesh.createPipelineState(vertexFunctionName: "vertex_instances",
                                                              textures: textures)
@@ -63,7 +63,7 @@ struct Submesh {
         functionConstants.setConstantValue(&property, type: .bool, index: 0)
         
         let vertexFunction = Renderer.library.makeFunction(name: vertexFunctionName)
-        let fragmentFunction = try! Renderer.library.makeFunction(name: "fragment_main",
+        let fragmentFunction = try! Renderer.library.makeFunction(name: "fragment_mirrorball",
                                                                   constantValues: functionConstants)
         
         let pipelineStateDescriptor = MTLRenderPipelineDescriptor()
