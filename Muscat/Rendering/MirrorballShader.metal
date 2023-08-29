@@ -75,7 +75,7 @@ fragment float4 fragment_mirrorball(VertexOut1 in  [[stage_in]],
 
     float3 I = normalize(in.worldPosition - fragmentUniforms.cameraPosition);
     float3 R = reflect(I, normalize(-in.worldNormal));
-    float3 R2 = float3(R.z, -R.y, R.x);
+    float3 R2 = float3(R.z, R.y, R.x);
     float3 envColor = environmentTexture.sample(cubeSampler, R2).rgb;
     
     float3 specularColor = lightSpecularColor * materialSpecularColor * specularIntensity;

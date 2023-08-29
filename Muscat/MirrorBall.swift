@@ -88,14 +88,17 @@ class Sphere: Model{
         ]
         let environmentTextureURL = Bundle.main.url(forResource: "environment", withExtension: "png")!
         environmentTexture = try? MTKTextureLoader(device: Renderer.device).newTexture(URL: environmentTextureURL, options: cubeTextureOptions)
-        
+
         super.init(name: name)
     }
     
     override func render(commandEncoder: MTLRenderCommandEncoder, submesh: Submesh) {
         timer += 0.05
         var currentTime = timer
-        
+
+        commandEncoder.setFrontFacing(.clockwise)
+        commandEncoder.setCullMode(.back)
+
         commandEncoder.setVertexBytes(&currentTime, length: MemoryLayout<Float>.stride, index: 2)
         
         commandEncoder.setFragmentTexture(environmentTexture, index: 3)
